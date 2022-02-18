@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <div class="py-5 text-center">
+    <hr class="my-4">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>아이디</th>
+          <th>그룹아이디</th>
+          <th>타이틀</th>
+          <th>롸이터</th>
+          <th>컨텐트</th>
+          <th>스타트</th>
+          <th>엔드</th>
+          <th>올데이</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="calendar : ${calendars}">
+          <td th:text="${calendar.id}">10000</td>
+          <td th:text="${calendar.groupid}">10</td>
+          <td th:text="${calendar.title}">10000</td>
+          <td th:text="${calendar.writer}">10</td>
+          <td th:text="${calendar.content}">10000</td>
+          <td th:text="${calendar.start}">10</td>
+          <td th:text="${calendar.end}">10000</td>
+          <td th:text="${calendar.allday}">10</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> <!-- /container -->
+
+</body>
+</html>
