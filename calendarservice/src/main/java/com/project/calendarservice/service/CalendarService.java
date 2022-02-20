@@ -24,6 +24,7 @@ public class CalendarService {
         calendarRepository.save(calendar);
     }
 
+    @Transactional(readOnly = true)
     public List<Calendar> calendarListFindByUser(String loginId) {
         return calendarRepository.calendarListFindByUser(loginId);
     }
