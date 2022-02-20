@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final MemberRepository memberRepository;
