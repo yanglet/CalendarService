@@ -9,14 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +36,7 @@ public class MemberController {
         return "basic/join";
     }
     @PostMapping("/diary/join")
-    public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model){
+    public String join(@Validated MemberForm memberForm, BindingResult bindingResult, Model model){
         if(validateDuplicateMember(memberForm)){
             model.addAttribute("validate",true);
             log.info("중복되는 아이디입니다.");
@@ -47,8 +46,11 @@ public class MemberController {
             log.info("binding result = {}", bindingResult);
             return "basic/join"; // 현재 폼을 다시 랜더링
         }
-        Member member = new Member(memberForm.getLoginId(),memberForm.getLoginPw(),
-                memberForm.getName(), memberForm.getAge(), memberForm.getGender(),
+        Member member = new Member(memberForm.getLoginId(),
+                memberForm.getLoginPw(),
+                memberForm.getName(),
+                memberForm.getAge(),
+                memberForm.getGender(),
                 memberForm.getUserType());
 
         memberRepository.save(member);

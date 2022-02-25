@@ -2,6 +2,7 @@ package com.project.calendarservice.controller;
 
 import com.project.calendarservice.domain.Calendar;
 import com.project.calendarservice.domain.CalendarDto;
+import com.project.calendarservice.domain.Member;
 import com.project.calendarservice.repository.CalendarRepository;
 import com.project.calendarservice.service.CalendarService;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +23,18 @@ public class CalendarController {
 
     @GetMapping(params="method=data")
     public @ResponseBody //일정 정보 api
-    List<CalendarDto> data(Model model, HttpSession session) {
-        return calendarService.calendarListFindByUser(session.getAttribute("user").
-                toString())
+    List<CalendarDto> data(Model model, @SessionAttribute(name = "user", required = false) Member member) {
+        return calendarService.calendarListFindByUser(member.getLoginId())
                 .stream()
-                .map(c -> new CalendarDto(c))
+                .map(CalendarDto::new)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/add")
     public String addForm() {return "basic/addcalendar";}
     @PostMapping("/add")
-    public String add(@ModelAttribute Calendar calendar, HttpSession session){
-        calendarService.save(calendar, session);
+    public String add(@ModelAttribute Calendar calendar, @SessionAttribute(name = "user", required = false) Member member){
+        calendarService.save(calendar, member);
         return "redirect:/diary/calendar"; //PRG
     }
 }
