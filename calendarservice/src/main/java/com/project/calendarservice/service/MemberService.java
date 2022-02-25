@@ -18,11 +18,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public int login(String loginId, String loginPw, HttpServletRequest request){
-        Optional<Member> member = memberRepository.findByLoginId(loginId);
+        Optional<Member> findMember = memberRepository.findByLoginId(loginId);
 
-        if (member.isPresent()) {
-            if (member.get().getLoginPw().equals(loginPw)) {
-                request.getSession().setAttribute("user", loginId); //로그인에 성공할 경우 세션 값 저장
+        if (findMember.isPresent()) {
+            if (findMember.get().getLoginPw().equals(loginPw)) {
+                request.getSession().setAttribute("user", findMember.get()); //로그인에 성공할 경우 세션 값 저장
                 log.info("login success");
                 return 1; //로그인 성공
 
